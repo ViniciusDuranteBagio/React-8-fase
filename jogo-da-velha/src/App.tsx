@@ -1,7 +1,5 @@
+import { Board } from "./components/board";
+
 export const App = () => {
-  return (
-    <>
-      <h1>opa</h1>
-    </>
-  );
+  return <Board />;
 };
