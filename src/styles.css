@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  width: 650px;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+  width: 200px;
+  min-height: 200px;
+  overflow-y: auto;
+}
+
+.status {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.game-board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-row {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.square {
+  background: #fff;
+  border: 2px solid #999;
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 1;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  transition: background 0.2s ease-in-out;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:hover {
+  background: #ddd;
+}
+
+.square:focus {
+  outline: none;
+  background: #eee;
+}
+
+ol,
+ul {
+  padding-left: 30px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #e7e7e7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+button:hover {
+  background-color: #d8d8d8;
+}
+
+.coin-toss-btn {
+  position: absolute;
+  top: -150px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  background: #ddcf08;
+  color: #333;
+  border: 2px solid #bfa100;
+  border-radius: 6px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s;
+}
+
+.coin-toss-btn:hover {
+  background: #ffe066;
+}
