@@ -9,7 +9,6 @@ body {
   display: flex;
   gap: 24px;
   align-items: flex-start;
-  justify-content: center;
 }
 
 .game-info { min-width: 180px; }
