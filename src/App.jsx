@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
@@ -15,11 +14,7 @@ function Board({ xIsNext, squares, onPlay }) {
       return;
     }
     const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = 'X';
-    } else {
-      nextSquares[i] = 'O';
-    }
+    nextSquares[i] = xIsNext ? 'X' : 'O';
     onPlay(nextSquares);
   }
 
@@ -53,7 +48,7 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
-function Game() {
+export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
@@ -69,21 +64,14 @@ function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Go to move #' + move;
-    } else {
-      description = 'Go to game start';
-    }
+  function resetGame() {
+    // always jumping to first index of history
+    jumpTo(0);
+    setHistory([Array(9).fill(null)]);
+  }
 
-    if (move === currentMove) {
-      return (
-        <li key={move}>
-          You are at move #{move}
-        </li>
-      );
-    }
+  const moves = history.map((squares, move) => {
+    let description = move > 0 ? 'Go to move #' + move : 'Go to game start';
     return (
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
@@ -95,9 +83,11 @@ function Game() {
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <br/>
+        <button onClick={resetGame}>Reset Game</button>
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+         <ol>{moves}</ol>
       </div>
     </div>
   );
@@ -105,9 +95,14 @@ function Game() {
 
 function calculateWinner(squares) {
   const lines = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6]
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -117,5 +112,3 @@ function calculateWinner(squares) {
   }
   return null;
 }
-
-export default Game;
