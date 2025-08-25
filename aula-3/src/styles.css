@@ -81,11 +81,11 @@ body {
   margin-bottom: 10px;
 }
 
-.game {
+.jogo {
   display: flex;
   flex-direction: row;
 }
 
-.game-info {
+.jogo-info {
   margin-left: 20px;
 }

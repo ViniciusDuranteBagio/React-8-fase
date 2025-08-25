@@ -1,37 +1,47 @@
 import { useState } from "react";
 
-function Quadrado({ value, quadradoClicado }) {
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <AppLayout></AppLayout>
+//   }
 
-  return <button className="quadrado" onClick={quadradoClicado}>
-    {value}
-  </button>;
+
+// ])
+// function AppLayout({ children }) {
+//   return (
+//     < div className="app">
+//       <Navigation />
+//       <main className="main-content">
+//         {children}
+//       </main>
+//     </div>
+//   )
+// }
+
+function Quadrado({ value, quadradoClicado }) {
+  return (
+    <button className="quadrado" onClick={quadradoClicado}>
+      {value}
+    </button>
+  );
 }
 
-export default function Tabuleiro() {
-  const [xIsProx, setXIsProx] = useState(true);
-  const [quadrados, setQuadrados] = useState(Array(9).fill(null));
-
+function Tabuleiro({ xIsProx, quadrados, onPlay }) {
   function clique(i) {
     if (quadrados[i] || calculaVitoria(quadrados)) {
-      return
+      return;
     }
     const proxQuadrados = quadrados.slice();
-    if (xIsProx) {
-      proxQuadrados[i] = 'X';
-    } else {
-      proxQuadrados[i] = 'O';
-    }
-    setQuadrados(proxQuadrados);
-    setXIsProx(!xIsProx);
+    proxQuadrados[i] = xIsProx ? "X" : "O";
+    onPlay(proxQuadrados);
   }
 
   const vencedor = calculaVitoria(quadrados);
-  let status;
-  if (vencedor) {
-    status = "Vencedor: " + vencedor;
-  } else {
-    status = "Próximo jogador: " + (xIsProx ? "X" : "O");
-  }
+  let status = vencedor
+    ? "Vencedor: " + vencedor
+    : "Próximo jogador: " + (xIsProx ? "X" : "O");
+
   return (
     <>
       <div className="status">{status}</div>
@@ -53,6 +63,58 @@ export default function Tabuleiro() {
     </>
   );
 }
+
+export default function Jogo() {
+  const [xIsProx, setXIsProx] = useState(true);
+  const [historia, setHistoria] = useState([Array(9).fill(null)]);
+  const [movimentoAtual, setMovimentoAtual] = useState(0);
+  const quadradosAtuais = historia[movimentoAtual];
+
+  function jogada(proxQuadrados) {
+    const proxHistoria = [...historia.slice(0, movimentoAtual + 1), proxQuadrados];
+    setHistoria(proxHistoria);
+    setMovimentoAtual(proxHistoria.length - 1);
+    setXIsProx(!xIsProx);
+  }
+
+  function pularPara(proxMovimento) {
+    setMovimentoAtual(proxMovimento);
+    setXIsProx(proxMovimento % 2 === 0);
+  }
+
+  const movimentos = historia.map((quadrados, movimento) => {
+    let descricao;
+    if (movimento > 0) {
+      descricao = 'Vá para o movimento #' + movimento;
+    } else {
+      descricao = 'Vá para o inicío do jogo'
+    }
+    return (
+      <li key={movimento}>
+        <button onClick={() => pularPara(movimento)}>{descricao}</button>
+      </li>
+    )
+  }
+
+
+  )
+
+  return (
+    <div className="jogo">
+      <div className="tabuleiro-jogo">
+        <Tabuleiro
+          xIsProx={xIsProx}
+          quadrados={quadradosAtuais}
+          onPlay={jogada}
+        />
+      </div>
+      <div>
+        <ol>{movimentos}</ol>
+      </div>
+    </div>
+  );
+}
+
 function calculaVitoria(quadrados) {
   const linhas = [
     [0, 1, 2],
@@ -62,11 +124,15 @@ function calculaVitoria(quadrados) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
   for (let i = 0; i < linhas.length; i++) {
     const [a, b, c] = linhas[i];
-    if (quadrados[a] && quadrados[a] === quadrados[b] && quadrados[a] === quadrados[c]) {
+    if (
+      quadrados[a] &&
+      quadrados[a] === quadrados[b] &&
+      quadrados[a] === quadrados[c]
+    ) {
       return quadrados[a];
     }
   }
