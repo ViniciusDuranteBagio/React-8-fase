@@ -1,11 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Game from './pages/Game';
 
+
+function AppLayout({ children }) {
+  return (
+    <div className="app">
+      <nav>
+        {/* Adicione seus links de navegação aqui */}
+        <a href="/">Home</a>
+        <a href="/game">Game</a>
+      </nav>
+      <main className="content">
+        {children}
+      </main>
+    </div>
+  );
+}
+
+function Home() {
+  const [count, setCount] = useState(0);
   return (
     <>
       <div>
@@ -29,7 +47,16 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout><Game/></AppLayout>,
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
+}
