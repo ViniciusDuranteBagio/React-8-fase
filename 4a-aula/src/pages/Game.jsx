@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './Estilo.css'
 
 function Square({ value, onSquareClick }) {
     return (

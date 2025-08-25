@@ -1,6 +1,7 @@
-import './App.css'
-import Navigation from './components/Navigation';
+import './styles.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Game from './pages/Game';
+import Navigation from './components/Navigation';
 
 const router = createBrowserRouter([
   {
