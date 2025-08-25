@@ -1,0 +1,74 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #0f172a;
+}
+#root {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.game {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.status {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.board-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.square {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  font: bold 24px/40px system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+.square:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #94a3b8;
+}
+
+.game-info {
+  padding-top: 28px;
+}
+.game-info ol {
+  margin: 0;
+  padding-left: 24px;
+}
+.game-info li {
+  margin-bottom: 8px;
+}
+.game-info button {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font: inherit;
+}
