@@ -2,33 +2,42 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Ola from './Ola.jsx'
+import Lista from './Lista.jsx'
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  function mais(){
+    setCount(previousCount => previousCount + 1);
+  }
+
+  function menos(){
+    setCount(previousCount => previousCount - 1);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+      <Ola nome="Guilherme"></Ola>
+      <div className='card'>
+        <button onClick={menos}>
+          -
+        </button>
+        <button>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button onClick={mais}>
+          +
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <div>
+        <Lista> 
+        </Lista>
+      </div>
+   </>
   )
 }
 
