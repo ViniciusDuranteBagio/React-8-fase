@@ -19,9 +19,32 @@ aulas/
   <details>
     <summary>atividade Jogo da Velha</summary>
     
-    - Desenvolver um jogo da velha funcional em React Native.
+    - Desenvolver um jogo da velha funcional em React Native seguindo o tutorial do react.
+	- Link do exercício: https://pt-br.react.dev/learn/tutorial-tic-tac-toe
   </details>
 - [**4a-aula-organizacao-basica**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/4a-aula) *(pages, navigation...)*  
+  <details>
+	<summary>Importante</summary>
+
+	- Antes de modificar qualquer coisa, **verifique** se o `react` já está listado nas dependências do arquivo **package.json**.
+
+	- ✅ Se o **React já estiver presente**, rode:
+		```bash
+		npm install
+		```
+
+	- ❌ Se o **React não estiver presente**, instale-o com:
+		```bash
+		npm install react
+		```
+
+	- Em seguida, instale o **React Router**:
+		```bash
+		npm install react-router-dom
+		```
+
+	- Pronto! Agora você está liberado para modificar o projeto.
+	</details>
   <details>
     <summary>atividades</summary>
     
