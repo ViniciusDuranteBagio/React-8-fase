@@ -11,6 +11,9 @@ export default function Navigation() {
           <Link to='/' className='nav-logo'>
             🎮 Jogo da Velha
           </Link>
+          <Link to='/about' className='nav-logo'>
+            📖 Sobre
+          </Link>
         </div>
       </div>
     </nav>
