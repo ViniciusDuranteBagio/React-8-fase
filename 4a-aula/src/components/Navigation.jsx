@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navigation() {
+
     return (
         <nav className="navigation">
-            <h1>Meu App</h1>
-            <ul>
-                <li>
-                    <Link to="/">Jogo da Velha</Link>
-                </li>
-            </ul>
+            <div className="nav-container">
+                <div className="nav-brand">
+                    <Link to={"/home"}>Início | </Link>
+                    <Link to={"/game"}>Play</Link>
+                </div>
+            </div>
         </nav>
     );
 }

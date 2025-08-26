@@ -1,5 +1,6 @@
 import './styles.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from './pages/Home';
 import Game from './pages/Game';
 import Navigation from './components/Navigation';
 
@@ -8,7 +9,23 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <AppLayout>
+        <Home/>
+      </AppLayout>
+    )
+  },
+  {
+    path: '/game',
+    element: (
+      <AppLayout>
         <Game/>
+      </AppLayout>
+    )
+  },
+  {
+    path: '/home',
+    element: (
+      <AppLayout>
+        <Home/>
       </AppLayout>
     )
   }
