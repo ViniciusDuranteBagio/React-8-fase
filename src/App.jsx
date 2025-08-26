@@ -28,14 +28,7 @@ const router = createBrowserRouter([
       </AppLayout>
     )
   },
-  {
-    path: '/about',
-    element: (
-      <AppLayout>
-        <About/>
-      </AppLayout>
-    )
-  }
+  
 ]);
 
 function AppLayout({ children }) {
