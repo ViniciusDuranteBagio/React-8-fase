@@ -1,5 +1,6 @@
-import { Board } from "./components/board";
+import { RouterProvider } from "react-router";
+import { router } from "./routes";
 
 export const App = () => {
-  return <Board />;
+  return <RouterProvider router={router} />;
 };
