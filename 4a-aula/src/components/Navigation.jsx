@@ -6,7 +6,8 @@ export default function Navigation() {
         <nav className="navigation">
             <div className="nav-container">
                 <div className="nav-brand">
-                    <Link to={"/home"}>Início | </Link>
+                    <Link to={"/"}>Início</Link>
+                    <br></br>
                     <Link to={"/game"}>Play</Link>
                 </div>
             </div>
