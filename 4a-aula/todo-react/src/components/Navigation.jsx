@@ -6,11 +6,14 @@ export default function Navigation() {
         <nav className="navigation">
             <div className="nav-container">
                 <div className="nav-brand">
+                    <Link to={"/home"} className="nav-logo">
+                        Home
+                    </Link>
                     <Link to={"/game"} className="nav-logo">
                         Game
                     </Link>
-                    <Link to={"/home"} className="nav-logo">
-                        Home
+                    <Link to={"/about"} className="nav-logo">
+                        Sobre
                     </Link>
                 </div>
             </div>

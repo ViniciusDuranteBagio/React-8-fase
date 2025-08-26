@@ -1,8 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './styles.css'
+import './styles.css';
+import { useState } from "react";
 import Navigation from "./components/Navigation";
 import Game from './pages/Game';
-import Home from './pages/Home'
+import Home from './pages/Home';
+import About from "./pages/About";
+import Err404 from "./pages/Error";
 
 const router = createBrowserRouter([
  {
@@ -14,10 +17,34 @@ const router = createBrowserRouter([
   ),
  },
  {
+  path: '/',
+  element: (
+    <AppLayout>
+      <Home />
+    </AppLayout>
+  ),
+ },
+ {
   path: '/game',
   element: (
     <AppLayout>
       <Game />
+    </AppLayout>
+  ),
+ },
+  {
+  path: '/about',
+  element: (
+    <AppLayout>
+      <About />
+    </AppLayout>
+  ),
+ },
+ {
+  path: '/*',
+  element: (
+    <AppLayout>
+      <Err404 />
     </AppLayout>
   ),
  },
