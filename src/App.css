@@ -1,0 +1,60 @@
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  justify-content: center;
+  margin: 20px;
+}
+
+.game {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.game-info { min-width: 180px; }
+.game-info ol,
+.game-info ul {
+  padding-left: 28px;
+  margin: 0;
+}
+.game-info li + li { margin-top: 8px; }
+.game-info button {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  color: #111;
+  background: #fafafa;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.game-info button:hover { background: #f0f0f0; }
+
+.status {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.board-row {
+  display: flex;
+}
+
+.square {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  background: #fff;
+  border: 1px solid #999;
+  padding: 0;
+  cursor: pointer;
+  color: #111;
+  line-height: 1;
+  user-select: none;
+}
+.square:hover { background: #f7f7f7; }
+.square:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(60, 120, 240, 0.35);
+}
