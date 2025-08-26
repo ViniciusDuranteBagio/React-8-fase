@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 export default function Navigation() {
   return (
     <nav className="navigation">
-      <h1>Meu App</h1>
-      <ul>
-        <li>
-          <Link to="/">Jogo da Velha</Link>
-        </li>
-        {/* Adicione outros links se necessário */}
-      </ul>
+        <div className = "nav-container" >
+            <div className="nav-brand">🎮
+             <Link to="/game">play </Link>
+             <Link to="/"> | Home </Link>
+             <Link to="/" className ="nav-logo" >
+                - Joga da Velha
+             </Link>
+             </div>
+        </div>
     </nav>
   );
 }

@@ -2,6 +2,7 @@ import "./styles.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Game from "./pages/game";
 import Navigation from "./components/Navigation";
+import Home from "./pages/home";
 
 // Layout principal
 function AppLayout({ children }) {
@@ -19,11 +20,20 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <AppLayout>
+        <Home />
+      </AppLayout>
+    ),
+    },
+    {
+     path: "/Game",
+    element: (
+      <AppLayout>
         <Game />
       </AppLayout>
     ),
   },
 ]);
+
 
 // Componente principal
 export default function App() {
