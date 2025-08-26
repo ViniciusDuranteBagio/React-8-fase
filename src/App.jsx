@@ -1,10 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Game from './pages/Game';
+import Home from './pages/Home';
 import './styles.css'
+import Navigation from "./components/Navigation";
 
 const router = createBrowserRouter([
  {
   path: '/',
+  element: (
+    <AppLayout>
+      <Home />
+    </AppLayout>
+  ),
+ },
+  {
+  path: '/game',
   element: (
     <AppLayout>
       <Game />
@@ -17,6 +27,7 @@ const router = createBrowserRouter([
 function AppLayout({children}) {
   return (
     <div className="app">
+      <Navigation />
       <main className="main-content">{children}</main>
     </div>
   );
