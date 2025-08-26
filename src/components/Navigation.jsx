@@ -7,6 +7,8 @@ export default function Navigation() {
                 <div className='nav-brand'>
                     <Link to={'/game'}>Play</Link>
                     <br />
+                    <Link to={'/about'}>About</Link>
+                    <br />
                     <Link to={'/'}>Home</Link>
                 </div>
             </div>

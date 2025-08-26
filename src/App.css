@@ -58,3 +58,7 @@ body {
   outline: none;
   box-shadow: 0 0 0 2px rgba(60, 120, 240, 0.35);
 }
+
+.margin-top-100 {
+  margin-top: 100px;
+}

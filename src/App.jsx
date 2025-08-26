@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Game from './pages/Game';
+import About from './pages/About';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 const router = createBrowserRouter([
@@ -20,7 +22,23 @@ const router = createBrowserRouter([
       <Game />
       </AppLayout> 
     )
-  }
+  },
+  {
+    path: '/about',
+    element: (
+      <AppLayout>
+      <About />
+      </AppLayout> 
+    )
+  },
+  {
+    path: '*',
+    element: (
+      <AppLayout>
+        <NotFound />
+      </AppLayout>
+    ),
+  },
 ]);
 
 function AppLayout({ children }) {
