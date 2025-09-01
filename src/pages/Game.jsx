@@ -1,48 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className="square" onClick={onSquareClick} disabled={!!value}>
       {value}
     </button>
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, disabled }) {
   function handleClick(i) {
-    if (calculateWinner(squares) || squares[i]) {
+    if (disabled || calculateWinner(squares) || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
-    nextSquares[i] = xIsNext ? 'X' : 'O';
+    nextSquares[i] = xIsNext ? "X" : "O";
     onPlay(nextSquares);
   }
 
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = 'Winner: ' + winner;
+    status = "Winner: " + winner;
+  } else if (!squares.includes(null)) {
+    status = "Empate!";
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
   return (
     <>
       <div className="status">{status}</div>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+        {[0, 1, 2].map((i) => (
+          <Square key={i} value={squares[i]} onSquareClick={() => handleClick(i)} />
+        ))}
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+        {[3, 4, 5].map((i) => (
+          <Square key={i} value={squares[i]} onSquareClick={() => handleClick(i)} />
+        ))}
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        {[6, 7, 8].map((i) => (
+          <Square key={i} value={squares[i]} onSquareClick={() => handleClick(i)} />
+        ))}
       </div>
     </>
   );
@@ -51,30 +53,64 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
+
+  const [scoreX, setScoreX] = useState(0);
+  const [scoreO, setScoreO] = useState(0);
+  const [roundEnded, setRoundEnded] = useState(false);
+  const [round, setRound] = useState(1);
+  const bestOf = 3; 
+
   const currentSquares = history[currentMove];
+  const winner = calculateWinner(currentSquares);
+  const isDraw = !winner && !currentSquares.includes(null);
+  const seriesOver = scoreX === 2 || scoreO === 2;
+
+  const xIsNext = currentMove % 2 === 0 && !seriesOver && !roundEnded;
+
+  useEffect(() => {
+    if (!roundEnded && (winner || isDraw)) {
+      if (winner === "X") setScoreX((s) => s + 1);
+      if (winner === "O") setScoreO((s) => s + 1);
+      setRoundEnded(true);
+    }
+  }, [winner, isDraw, roundEnded]);
 
   function handlePlay(nextSquares) {
+    if (roundEnded || seriesOver) return;
+
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
   function jumpTo(nextMove) {
+    if (roundEnded || seriesOver) return;
     setCurrentMove(nextMove);
   }
 
-  function resetGame() {
-    // always jumping to first index of history
-    jumpTo(0);
+  function nextRound() {
     setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+    setRound((r) => r + 1);
+    setRoundEnded(false);
   }
 
-  const moves = history.map((squares, move) => {
-    let description = move > 0 ? 'Go to move #' + move : 'Go to game start';
+  function resetSeries() {
+    setScoreX(0);
+    setScoreO(0);
+    setRound(1);
+    setRoundEnded(false);
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+  }
+
+  const moves = history.map((_, move) => {
+    const description = move > 0 ? "Go to move #" + move : "Go to game start";
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => jumpTo(move)} disabled={roundEnded || seriesOver}>
+          {description}
+        </button>
       </li>
     );
   });
@@ -82,12 +118,36 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-        <br/>
-        <button onClick={resetGame}>Reset Game</button>
+        <Board
+          xIsNext={xIsNext}
+          squares={currentSquares}
+          onPlay={handlePlay}
+          disabled={roundEnded || seriesOver}
+        />
+        {roundEnded && !seriesOver && (
+          <button style={{ marginTop: 12 }} onClick={nextRound}>
+            Próxima rodada
+          </button>
+        )}
+        {seriesOver && (
+          <button style={{ marginTop: 12 }} onClick={resetSeries}>
+            Reiniciar série
+          </button>
+        )}
       </div>
+
       <div className="game-info">
-         <ol>{moves}</ol>
+        <div className="status" style={{ marginBottom: 12 }}>
+          {seriesOver
+            ? `Série encerrada — vencedor: ${scoreX > scoreO ? "X" : "O"}`
+            : `Rodada ${round} / Melhor de ${bestOf}`}
+        </div>
+        <ul>
+          <li>Placar X: {scoreX}</li>
+          <li>Placar O: {scoreO}</li>
+        </ul>
+        <hr style={{ margin: "12px 0" }} />
+        <ol>{moves}</ol>
       </div>
     </div>
   );
