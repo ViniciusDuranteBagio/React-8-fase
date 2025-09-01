@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Square({ value, onSquareClick }) {
     return (
@@ -55,17 +55,149 @@ function Board({ xIsNext, squares, onPlay }) {
 function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [currentMove, setCurrentMove] = useState(0);
+    const [scoreX, setScoreX] = useState(0);
+    const [scoreO, setScoreO] = useState(0);
+    const [round, setRound] = useState(1);
+    const bestOf = 3;
+    const [gameOver, setGameOver] = useState(false);
+    const [seriesWinner, setSeriesWinner] = useState(null);
+    const [boardLocked, setBoardLocked] = useState(false);
+    const [vsBot, setVsBot] = useState(false);
+    const [botThinking, setBotThinking] = useState(false);
     const xIsNext = currentMove % 2 === 0;
     const currentSquares = history[currentMove];
+    const [timer, setTimer] = useState(10);
+    const timerActive = !boardLocked && !gameOver && !(vsBot && !xIsNext && botThinking);
+    // Reinicia timer a cada jogada ou rodada
+    useEffect(() => {
+        if (gameOver || boardLocked) {
+            setTimer(0);
+            return;
+        }
+        if (!timerActive) return;
+        setTimer(10);
+    }, [currentMove, round, boardLocked, gameOver, vsBot, xIsNext, botThinking]);
+
+    // Timer countdown
+    useEffect(() => {
+        if (gameOver || boardLocked) {
+            setTimer(0);
+            return;
+        }
+        if (!timerActive) return;
+        if (timer === 0) {
+            if (vsBot && !xIsNext) {
+                // Bot já vai jogar sozinho
+                return;
+            }
+            if (vsBot && xIsNext) {
+                // Jogada automática para X (usuário) se tempo zerar
+                const emptyIndexes = currentSquares
+                    .map((v, i) => (v == null ? i : null))
+                    .filter(i => i != null);
+                if (emptyIndexes.length > 0) {
+                    const randomIndex = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+                    const nextSquares = currentSquares.slice();
+                    nextSquares[randomIndex] = 'X';
+                    handlePlay(nextSquares);
+                }
+            } else if (!vsBot) {
+                // Passa o turno (simula jogada nula) apenas se possível
+                if (currentMove < history.length - 1) {
+                    setCurrentMove(m => m + 1);
+                }
+            }
+            return;
+        }
+        const id = setTimeout(() => setTimer(t => t - 1), 1000);
+        return () => clearTimeout(id);
+    }, [timer, timerActive, vsBot, xIsNext, currentSquares, handlePlay, boardLocked, gameOver, currentMove, history.length]);
+
 
     function handlePlay(nextSquares) {
+        if (boardLocked || gameOver || botThinking) return;
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
+
+        const winner = calculateWinner(nextSquares);
+        const isDraw = !winner && nextSquares.every(sq => sq);
+        if (winner || isDraw) {
+            setBoardLocked(true);
+            if (winner) {
+                if (winner === 'X') setScoreX(s => s + 1);
+                if (winner === 'O') setScoreO(s => s + 1);
+            }
+        }
     }
+
+    // Bot fácil: joga aleatório quando for a vez dele
+    useEffect(() => {
+        if (!vsBot || boardLocked || gameOver) return;
+        // Bot é sempre O
+        if (!xIsNext) {
+            setBotThinking(true);
+            const emptyIndexes = currentSquares
+                .map((v, i) => (v == null ? i : null))
+                .filter(i => i != null);
+            if (emptyIndexes.length === 0) {
+                setBotThinking(false);
+                return;
+            }
+            const randomIndex = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+            setTimeout(() => {
+                const nextSquares = currentSquares.slice();
+                nextSquares[randomIndex] = 'O';
+                handlePlay(nextSquares);
+                setBotThinking(false);
+            }, 700); // 700ms para simular "pensando"
+        }
+    }, [vsBot, xIsNext, currentSquares, boardLocked, gameOver]);
+
 
     function jumpTo(nextMove) {
         setCurrentMove(nextMove);
+    }
+
+    // Detecta fim de rodada e série
+    useEffect(() => {
+        const winner = calculateWinner(currentSquares);
+        const isDraw = !winner && currentSquares.every(sq => sq);
+        if ((winner || isDraw) && !gameOver) {
+            setBoardLocked(true);
+            // Checa se alguém ganhou a série
+            if (scoreX === 1 && winner === 'X') {
+                setGameOver(true);
+                setSeriesWinner('X');
+            } else if (scoreO === 1 && winner === 'O') {
+                setGameOver(true);
+                setSeriesWinner('O');
+            } else if (scoreX === 2) {
+                setGameOver(true);
+                setSeriesWinner('X');
+            } else if (scoreO === 2) {
+                setGameOver(true);
+                setSeriesWinner('O');
+            }
+        }
+    }, [currentSquares, scoreX, scoreO, gameOver]);
+
+    function nextRound() {
+        setHistory([Array(9).fill(null)]);
+        setCurrentMove(0);
+        setRound(r => r + 1);
+        setBoardLocked(false);
+    }
+
+    function resetSeries() {
+        setScoreX(0);
+        setScoreO(0);
+        setRound(1);
+        setGameOver(false);
+        setSeriesWinner(null);
+        setBoardLocked(false);
+        setHistory([Array(9).fill(null)]);
+        setCurrentMove(0);
     }
 
     const moves = history.map((squares, move) => {
@@ -84,12 +216,35 @@ function Game() {
 
     return (
         <div className="game">
+            <div style={{marginBottom: 8}}>
+                <strong>Tempo restante: {timer}s</strong>
+            </div>
+            <div className="scoreboard">
+                <span>Placar - X: {scoreX} | O: {scoreO} | Rodada: {round}/{bestOf}</span>
+            </div>
+            <div style={{marginBottom: 12}}>
+                <label>
+                    <input type="checkbox" checked={vsBot} onChange={e => setVsBot(e.target.checked)} disabled={round > 1 || scoreX > 0 || scoreO > 0} />
+                    &nbsp;Jogar contra o Bot
+                </label>
+                {vsBot && <span style={{marginLeft: 10, color: '#888'}}>(Você é X, Bot é O)</span>}
+            </div>
             <div className="game-board">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+                {botThinking && vsBot && !gameOver && <div style={{marginTop: 8, color: '#888'}}>Bot pensando...</div>}
             </div>
             <div className="game-info">
                 <ol>{moves}</ol>
             </div>
+            {boardLocked && !gameOver && (
+                <button onClick={nextRound} style={{marginTop: 16}}>Próxima rodada</button>
+            )}
+            {gameOver && (
+                <div style={{marginTop: 16}}>
+                    <h2>Fim da série! Vencedor: {seriesWinner}</h2>
+                    <button onClick={resetSeries}>Reiniciar série</button>
+                </div>
+            )}
         </div>
     );
 }
