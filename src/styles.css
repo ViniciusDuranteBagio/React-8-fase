@@ -503,3 +503,94 @@ body {
     font-size: 1.2rem;
   }
 }
+
+/* Estilos para timer e controles do jogo */
+.game-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.game-controls button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.game-controls button:hover {
+  background: #5a6fd8;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.timer-display {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 10px;
+  border: 2px solid #667eea;
+}
+
+.timer-display h3 {
+  color: #667eea;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.timer-display p {
+  color: #ff6b6b;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Animação para timer baixo */
+.timer-display.timer-low {
+  animation: pulse 1s infinite;
+  border-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.timer-display.timer-low h3 {
+  color: #ff6b6b;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Estilo para jogo pausado */
+.game-board.paused {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.game-board.paused .square {
+  cursor: not-allowed;
+}
+
+/* Responsividade para controles */
+@media (max-width: 480px) {
+  .game-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .game-controls button {
+    width: 200px;
+  }
+  
+  .timer-display h3 {
+    font-size: 1.2rem;
+  }
+}
+

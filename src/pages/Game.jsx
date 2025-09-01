@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
@@ -8,9 +8,9 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, isGameActive }) {
   function handleClick(i) {
-    if (calculateWinner(squares) || squares[i]) {
+    if (calculateWinner(squares) || squares[i] || !isGameActive) {
       return;
     }
     const nextSquares = squares.slice();
@@ -25,9 +25,13 @@ function Board({ xIsNext, squares, onPlay }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = 'Winner: ' + winner;
+    status = 'Vencedor: ' + winner;
+  } else if (squares.every(square => square !== null)) {
+    status = 'Empate!';
+  } else if (!isGameActive) {
+    status = 'Jogo Pausado';
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    status = 'Próximo jogador: ' + (xIsNext ? 'X' : 'O');
   }
 
   return (
@@ -55,17 +59,99 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [timer, setTimer] = useState(10);
+  const [isGameActive, setIsGameActive] = useState(true);
+  const [gameMode, setGameMode] = useState('pvp'); // 'pvp' ou 'vsbot'
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+
+  // Timer countdown effect
+  useEffect(() => {
+    const winner = calculateWinner(currentSquares);
+    
+    if (!isGameActive || winner || currentSquares.every(square => square !== null)) {
+      return;
+    }
+
+    if (timer > 0) {
+      const timerId = setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      return () => clearTimeout(timerId);
+    } else {
+      // Timer zerou - executar ação automática
+      if (gameMode === 'vsbot' && !xIsNext) {
+        // Bot faz jogada automática
+        makeBotMove();
+      } else {
+        // Passa o turno (jogada vazia)
+        const nextHistory = [...history.slice(0, currentMove + 1), currentSquares];
+        setHistory(nextHistory);
+        setCurrentMove(nextHistory.length - 1);
+        setTimer(10);
+      }
+    }
+  }, [timer, isGameActive, currentSquares, gameMode, xIsNext, currentMove, history]);
+
+  // Reset timer when move changes
+  useEffect(() => {
+    const winner = calculateWinner(currentSquares);
+    if (winner || currentSquares.every(square => square !== null)) {
+      setIsGameActive(false);
+    } else {
+      setTimer(10);
+    }
+  }, [currentMove, currentSquares]);
+
+  // Bot auto-play effect
+  useEffect(() => {
+    const winner = calculateWinner(currentSquares);
+    
+    if (gameMode === 'vsbot' && !xIsNext && isGameActive && !winner && !currentSquares.every(square => square !== null)) {
+      // Bot joga automaticamente após um pequeno delay
+      const botTimer = setTimeout(() => {
+        makeBotMove();
+      }, 1500); // 1.5 segundos de delay para parecer mais natural
+      
+      return () => clearTimeout(botTimer);
+    }
+  }, [currentMove, gameMode, xIsNext, isGameActive, currentSquares]);
 
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+    setTimer(10); // Reset timer após jogada
   }
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
+    setTimer(10);
+  }
+
+  function makeBotMove() {
+    const availableSquares = currentSquares
+      .map((square, index) => square === null ? index : null)
+      .filter(val => val !== null);
+    
+    if (availableSquares.length > 0) {
+      const randomIndex = availableSquares[Math.floor(Math.random() * availableSquares.length)];
+      const nextSquares = currentSquares.slice();
+      nextSquares[randomIndex] = xIsNext ? 'X' : 'O';
+      handlePlay(nextSquares);
+    }
+  }
+
+  function toggleGameMode() {
+    setGameMode(gameMode === 'pvp' ? 'vsbot' : 'pvp');
+    restartGame();
+  }
+
+  function restartGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+    setTimer(10);
+    setIsGameActive(true);
   }
 
   const moves = history.map((squares, move) => {
@@ -85,7 +171,21 @@ export default function Game() {
   return (
     <div className='game'>
       <div className='game-board'>
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <div className='game-controls'>
+          <button onClick={toggleGameMode}>
+            Modo: {gameMode === 'pvp' ? 'Jogador vs Jogador' : 'vs Bot'}
+          </button>
+          <button onClick={restartGame}>Reiniciar Jogo</button>
+        </div>
+        
+        <div className={`timer-display ${timer <= 3 && isGameActive ? 'timer-low' : ''}`}>
+          <h3>Tempo restante: {isGameActive ? timer : 'PAUSADO'}s</h3>
+          {!isGameActive && <p>Jogo finalizado!</p>}
+        </div>
+        
+        <div className={`game-board-container ${!isGameActive ? 'paused' : ''}`}>
+          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} isGameActive={isGameActive} />
+        </div>
       </div>
       <div className='game-info'>
         <ol>{moves}</ol>
