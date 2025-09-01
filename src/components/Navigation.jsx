@@ -11,9 +11,6 @@ export default function Navigation() {
     <nav className="navigation">
       <div className="nav-container">
         <div className="nav-brand">
-          <Link to={"/game"} >Play</Link>
-          <br></br>
-          <Link to={"/"} >Home</Link>
           <Link to="/" className="nav-logo">
             🎮 Jogo da Velha
           </Link>
