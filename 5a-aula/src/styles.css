@@ -65,6 +65,10 @@ body {
   gap: 30px;
 }
 
+.nav-button {
+  flex-direction: column;
+}
+
 .nav-link {
   text-decoration: none;
   color: #333;
@@ -188,7 +192,7 @@ body {
 
 .game {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -204,6 +208,7 @@ body {
 }
 
 .game-info h3 {
+  text-align: center;
   margin-bottom: 15px;
   color: #333;
 }

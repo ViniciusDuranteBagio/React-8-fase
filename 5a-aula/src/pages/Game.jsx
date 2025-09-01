@@ -52,16 +52,38 @@ function Board({ xIsNext, squares, onPlay }) {
     );
 }
 
+function modes() {
+    return (
+        <>
+        <div className="nav-menu nav-button">
+            <h3>
+                Modos de Jogo
+            </h3>
+            <button className='btn btn-secondary'>1 v 1</button>
+            <button className='btn btn-secondary'>melhor de 3</button>
+            <button className='btn btn-secondary'>Bot Fácil</button>
+        </div>
+        </>
+    );
+}
+
 function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [currentMove, setCurrentMove] = useState(0);
     const xIsNext = currentMove % 2 === 0;
+    const [parts, setParts] = useState([]);
     const currentSquares = history[currentMove];
 
     function handlePlay(nextSquares) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
+
+        const winner = calculateWinner(nextSquares);
+        if (winner) {
+            const player = winner === 'X' ? 'Jogador 1' : 'Jogador 2';
+            setParts([...parts, player]);
+        }
     }
 
     function jumpTo(nextMove) {
@@ -84,10 +106,21 @@ function Game() {
 
     return (
         <div className="game">
+            <div className="game-mode">
+                {modes()}
+            </div>
+            <div></div>
+            <div></div>
             <div className="game-board">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
             </div>
+            <div></div>
             <div className="game-info">
+                <h3>Partidas</h3>
+                <ol>{parts.map((p, i) => <li key={i}>{p}</li>)}</ol>
+            </div>
+            <div className="game-info">
+                <h3>Histórico</h3>
                 <ol>{moves}</ol>
             </div>
         </div>
