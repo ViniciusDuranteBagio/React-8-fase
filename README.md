@@ -51,3 +51,34 @@ aulas/
     - Criar estrutura inicial com páginas, navegação e componentes básicos.  
     - Implementar um **Fallback** para quando aparecer erro 404, redirecionando para a Home. 
   </details>
+- [**5a-aula-funcionalidades-dinamicas**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/5a-aula) *(jogo da velha - placar, bot, timer...)*  
+  <details>
+	<summary>Importante</summary>
+
+	- Antes de modificar qualquer coisa, **verifique** se o projeto está rodando corretamente.  
+
+	- ✅ Se o projeto já estiver funcionando, continue normalmente.  
+	- ❌ Se houver erros, revise as dependências e execução com:  
+		```bash
+		npm install
+		npm start
+		```
+
+	- Lembre-se: essa atividade vale como **presença para a aula de hoje (01/09/2025)**.  
+  </details>
+
+  <details>
+    <summary>atividades</summary>
+    
+    - Adicionar **funcionalidades dinâmicas** ao jogo da velha.  
+    - Escolha **pelo menos uma** das opções abaixo:  
+      - Placar & "melhor de 3".  
+      - Bot "Fácil" (single-player).  
+      - Timer por jogada (10s).  
+
+    - Regras gerais:  
+      - Ao detectar vencedor/empate: atualizar placar, bloquear jogadas e mostrar botão **“Próxima rodada”**.  
+      - Se escolher o modo **melhor de 3**: vence quem alcançar 2 vitórias primeiro.  
+      - Se ativar o **modo Bot**: ele deve jogar em posição aleatória, após um pequeno delay.  
+      - Se ativar o **timer**: turno dura no máximo 10s, caso expire deve pular jogada ou jogar automático.  
+  </details>

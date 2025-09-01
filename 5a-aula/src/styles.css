@@ -107,8 +107,7 @@ body {
 }
 
 .hero-section {
-  padding: 60px 20px;
-  margin-bottom: 60px;
+  padding: 140px 20px;
 }
 
 .hero-section h1 {
@@ -252,6 +251,14 @@ body {
   text-align: center;
 }
 
+.nav-brand .btn {
+  margin-right: 15px;
+}
+
+.nav-brand .btn:last-child {
+  margin-right: 0;
+}
+
 /* Botões */
 .btn {
   display: inline-block;
@@ -263,6 +270,7 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
+  background-color: #f0f0f0;
 }
 
 .btn-primary {

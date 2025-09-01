@@ -1,12 +1,16 @@
 
 function Home() {
   return (
-    <div>
-      <h2>Bem-vindo ao Jogo da Velha!</h2>
-      <p>Clique em "Play" na navegação para começar a jogar.</p>
+    <div className="home-page">
+      <div className="hero-section">
+        <h1>✦ Jogo da Velha Cósmico ✦</h1>
+        <p>
+          Uma batalha lendária entre <strong>X</strong> e <strong>O</strong> que atravessa gerações.  
+          Prove sua estratégia, desafie amigos e alcance a glória no tabuleiro!
+        </p>
+      </div>
     </div>
   );
 }
 
-
-export default Home
+export default Home;
