@@ -55,14 +55,14 @@ function Board({ xIsNext, squares, onPlay }) {
 function modes() {
     return (
         <>
-        <div className="nav-menu nav-button">
-            <h3>
-                Modos de Jogo
-            </h3>
-            <button className='btn btn-secondary'>1 v 1</button>
-            <button className='btn btn-secondary'>melhor de 3</button>
-            <button className='btn btn-secondary'>Bot Fácil</button>
-        </div>
+            <div className="nav-menu nav-button">
+                <h3>
+                    Modos de Jogo
+                </h3>
+                <button className='btn btn-secondary'>1 v 1</button>
+                <button className='btn btn-secondary'>melhor de 3</button>
+                <button className='btn btn-secondary'>Bot Fácil</button>
+            </div>
         </>
     );
 }
@@ -90,12 +90,25 @@ function Game() {
         setCurrentMove(nextMove);
     }
 
+    function resetGame() {
+        setHistory([Array(9).fill(null)]);
+        setCurrentMove(0);
+    }
+
+    function undoMove() {
+        if (currentMove > 0) {
+            const newHistory = history.slice(0, -1);
+            setHistory(newHistory);
+            setCurrentMove(newHistory.length - 1);
+        }
+    }
+
     const moves = history.map((squares, move) => {
         let description;
         if (move > 0) {
-            description = 'Go to move #' + move;
+            description = 'Movimento ' + move;
         } else {
-            description = 'Go to game start';
+            description = 'Início da Partida';
         }
         return (
             <li key={move}>
@@ -106,22 +119,30 @@ function Game() {
 
     return (
         <div className="game">
-            <div className="game-mode">
+            <div className="sidebar left game-mode">
                 {modes()}
             </div>
-            <div></div>
-            <div></div>
+            <div className="sidebar game-mode">
+                <div className="nav-menu nav-button">
+                    <h3>
+                        Controles
+                    </h3>
+                    <button className="btn btn-secondary" onClick={() => resetGame()}>Jogar Novamente</button>
+                    <button className="btn btn-secondary" onClick={() => undoMove()}>Voltar Jogada</button>
+                </div>
+            </div>
             <div className="game-board">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
             </div>
-            <div></div>
             <div className="game-info">
                 <h3>Partidas</h3>
                 <ol>{parts.map((p, i) => <li key={i}>{p}</li>)}</ol>
             </div>
-            <div className="game-info">
-                <h3>Histórico</h3>
-                <ol>{moves}</ol>
+            <div className="sidebar right">
+                <div className="game-info">
+                    <h3>Histórico</h3>
+                    <ol>{moves}</ol>
+                </div>
             </div>
         </div>
     );
