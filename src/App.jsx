@@ -1,41 +1,48 @@
-import "./styles.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Game from "./pages/game";
-import Navigation from "./components/Navigation";
-import Home from "./pages/home";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import Game from './pages/Game';
+import About from './pages/about';
+import './styles.css';
 
-// Layout principal
-function AppLayout({ children }) {
-  return (
-    <div className="app">
-      <Navigation />
-      <main className="main-content">{children}</main>
-    </div>
-  );
-}
-
-// Configuração do roteamento
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <AppLayout>
         <Home />
       </AppLayout>
     ),
-    },
-    {
-     path: "/Game",
+  },
+  {
+    path: '/game',
     element: (
       <AppLayout>
         <Game />
       </AppLayout>
     ),
   },
+  {
+    path: '/about',
+    element: (
+      <AppLayout>
+        <About />
+      </AppLayout>
+    ),
+  },
 ]);
 
+function AppLayout({ children }) {
+  return (
+    <div className="app">
+      <Navigation />
+      <main className="main-content">
+        {children}
+      </main>
+    </div>
+  );
+}
 
-// Componente principal
 export default function App() {
   return <RouterProvider router={router} />;
 }

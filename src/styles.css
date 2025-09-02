@@ -503,3 +503,65 @@ body {
     font-size: 1.2rem;
   }
 }
+/* Placar e rodadas */
+.scoreboard {
+  text-align: center;
+  margin-bottom: 30px;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #667eea;
+}
+
+.scoreboard h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.scoreboard p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Botão próxima rodada */
+.btn-next {
+  background: #38b000;
+  color: white;
+  margin-top: 20px;
+}
+
+.btn-next:hover {
+  background: #2d8f00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(56, 176, 0, 0.4);
+}
+
+/* Série vencida */
+.series-result {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.series-result h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Destaque casas vencedoras */
+.square.winner {
+  background: #ffe066 !important;
+  color: #333;
+  animation: pulse 1s infinite alternate;
+}
+
+/* Animação leve para a vitória */
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 224, 102, 0.8);
+  }
+}
