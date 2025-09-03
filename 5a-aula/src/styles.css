@@ -220,7 +220,7 @@ body {
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  min-width: 220px;
+  min-width: 225px;
   max-width: 280px;
 }
 
@@ -234,7 +234,6 @@ body {
   text-align: center;
   max-width: 280px;
 }
-
 
 /* Jogo da velha */
 .square {
@@ -332,6 +331,30 @@ body {
 .btn-reset:hover {
   background: #ff5252;
   transform: translateY(-2px);
+}
+
+.btn.btn-secondary.active-mode {
+  position: relative;
+  background: linear-gradient(135deg, #6a4bcf, #8e65e5);
+  color: #fff;
+  font-weight: 600;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn.btn-secondary.active-mode::after {
+  content: '✔';
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  font-size: 0.9rem;
+  color: #ffd700;
+}
+
+.btn.btn-secondary.active-mode:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Lista de jogadas */

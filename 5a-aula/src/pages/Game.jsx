@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Modes from '../components/Modes'
 
 function Square({ value, onSquareClick }) {
     return (
@@ -52,27 +53,15 @@ function Board({ xIsNext, squares, onPlay }) {
     );
 }
 
-function modes() {
-    return (
-        <>
-            <div className="nav-menu nav-button">
-                <h3>
-                    Modos de Jogo
-                </h3>
-                <button className='btn btn-secondary'>1 v 1</button>
-                <button className='btn btn-secondary'>melhor de 3</button>
-                <button className='btn btn-secondary'>Bot Fácil</button>
-            </div>
-        </>
-    );
-}
-
 function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [currentMove, setCurrentMove] = useState(0);
+    const [selectedMode, setSelectedMode] = useState('1 v 1');
     const xIsNext = currentMove % 2 === 0;
     const [parts, setParts] = useState([]);
     const currentSquares = history[currentMove];
+
+    const [roundWins, setRoundWins] = useState({ player1: 0, player2: 0 });
 
     function handlePlay(nextSquares) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -82,7 +71,56 @@ function Game() {
         const winner = calculateWinner(nextSquares);
         if (winner) {
             const player = winner === 'X' ? 'Jogador 1' : 'Jogador 2';
-            setParts([...parts, player]);
+            const updatedParts = [...parts, player];
+            setParts(updatedParts);
+
+            if (selectedMode === 'bestOf3') {
+                const countPlayer1 = updatedParts.filter(p => p === 'Jogador 1').length;
+                const countPlayer2 = updatedParts.filter(p => p === 'Jogador 2').length;
+
+                if (countPlayer1 === 2 || countPlayer2 === 2) {
+                    let newRoundWins = { ...roundWins };
+                    if (countPlayer1 === 2) newRoundWins.player1 += 1;
+                    if (countPlayer2 === 2) newRoundWins.player2 += 1;
+
+                    setRoundWins(newRoundWins);
+                    setParts(prev => [...prev, `🏆 ${player} venceu a rodada!`]);
+
+                    if (newRoundWins.player1 === 2 || newRoundWins.player2 === 2) {
+                        const champion = newRoundWins.player1 === 2 ? 'Jogador 1' : 'Jogador 2';
+                        setParts(prev => [...prev, `🎉 ${champion} venceu a partida!`]);
+
+                        setTimeout(() => {
+                            resetGame();
+                            setRoundWins({ player1: 0, player2: 0 });
+                        }, 3000);
+                    } else {
+                        setTimeout(() => {
+                            setParts([]);
+                            resetPart();
+                        }, 2000);
+                    }
+                }
+            }
+            return;
+        }
+
+        if (selectedMode === "botEasy" && xIsNext) {
+            const emptyIndices = nextSquares
+                .map((val, idx) => (val === null ? idx : null))
+                .filter(val => val !== null);
+
+            const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            if (randomIndex !== undefined) {
+                const botSquares = nextSquares.slice();
+                botSquares[randomIndex] = 'O';
+
+                setTimeout(() => {
+                    const botHistory = [...nextHistory, botSquares];
+                    setHistory(botHistory);
+                    setCurrentMove(botHistory.length - 1);
+                }, 500);
+            }
         }
     }
 
@@ -91,6 +129,12 @@ function Game() {
     }
 
     function resetGame() {
+        setHistory([Array(9).fill(null)]);
+        setCurrentMove(0);
+        setParts([]);
+    }
+
+    function resetPart() {
         setHistory([Array(9).fill(null)]);
         setCurrentMove(0);
     }
@@ -120,24 +164,42 @@ function Game() {
     return (
         <div className="game">
             <div className="sidebar left game-mode">
-                {modes()}
+                <Modes
+                    selectedMode={selectedMode}
+                    onModeChange={setSelectedMode}
+                />
             </div>
             <div className="sidebar game-mode">
                 <div className="nav-menu nav-button">
                     <h3>
                         Controles
                     </h3>
-                    <button className="btn btn-secondary" onClick={() => resetGame()}>Jogar Novamente</button>
+                    {selectedMode === 'bestOf3' && (
+                        <button className="btn btn-secondary" onClick={() => resetPart()}>Próxima Rodada</button>
+                    )}
                     <button className="btn btn-secondary" onClick={() => undoMove()}>Voltar Jogada</button>
+                    <button className="btn btn-secondary" onClick={() => resetGame()}>Reiniciar Jogo</button>
                 </div>
             </div>
             <div className="game-board">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
             </div>
-            <div className="game-info">
-                <h3>Partidas</h3>
-                <ol>{parts.map((p, i) => <li key={i}>{p}</li>)}</ol>
-            </div>
+            {selectedMode === 'bestOf3' && (
+                <>
+                    <div className="hero-buttons">
+                        <div className="game-info">
+                            <h3>Placar Geral</h3>
+                            <p>Jogador 1 (X): {roundWins.player1} 🏆 Jogador 2 (O): {roundWins.player2} 🏆</p>
+                            <h4>Vitórias da Rodada</h4>
+                            <p>Jogador 1: {parts.filter(p => p === 'Jogador 1').length} | Jogador 2: {parts.filter(p => p === 'Jogador 2').length}</p>
+                        </div>
+                        <div className="game-info">
+                            <h3>Partidas</h3>
+                            <ol>{parts.map((p, i) => <li key={i}>{p}</li>)}</ol>
+                        </div>
+                    </div>
+                </>
+            )}
             <div className="sidebar right">
                 <div className="game-info">
                     <h3>Histórico</h3>
