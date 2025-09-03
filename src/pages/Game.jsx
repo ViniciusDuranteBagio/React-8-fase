@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 function Square({ value, onSquareClick }) {
     return (
-        <button className="square" onClick={onSquareClick}>
+        <button className="square" onClick={onSquareClick} tabIndex={0}>
             {value}
         </button>
     );
@@ -215,36 +215,39 @@ function Game() {
     });
 
     return (
-        <div className="game">
-            <div style={{marginBottom: 8}}>
-                <strong>Tempo restante: {timer}s</strong>
+        <div className="game game-ui">
+            <div className="game-header">
+                <div className="scoreboard-ui">
+                    Placar — <span className="score-x">X: {scoreX}</span> | <span className="score-o">O: {scoreO}</span> | <span className="score-round">Rodada: {round}/{bestOf}</span>
+                </div>
+                <div className={"timer-ui" + (timer <= 3 ? " timer-danger" : "")}>⏰ {timer}s</div>
             </div>
-            <div className="scoreboard">
-                <span>Placar - X: {scoreX} | O: {scoreO} | Rodada: {round}/{bestOf}</span>
-            </div>
-            <div style={{marginBottom: 12}}>
-                <label>
-                    <input type="checkbox" checked={vsBot} onChange={e => setVsBot(e.target.checked)} disabled={round > 1 || scoreX > 0 || scoreO > 0} />
-                    &nbsp;Jogar contra o Bot
+            <div className="game-controls">
+                <label className="bot-toggle-label">
+                    <input type="checkbox" checked={vsBot} onChange={e => setVsBot(e.target.checked)} disabled={round > 1 || scoreX > 0 || scoreO > 0} className="bot-toggle-input" />
+                    Jogar contra o Bot
                 </label>
-                {vsBot && <span style={{marginLeft: 10, color: '#888'}}>(Você é X, Bot é O)</span>}
+                {vsBot && <span className="bot-info">(Você é X, Bot é O)</span>}
             </div>
-            <div className="game-board">
+            <div className="game-board board-ui">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-                {botThinking && vsBot && !gameOver && <div style={{marginTop: 8, color: '#888'}}>Bot pensando...</div>}
+                {botThinking && vsBot && !gameOver && <div className="bot-thinking">Bot pensando...</div>}
             </div>
-            <div className="game-info">
+            <div className="game-info info-ui">
+                <h3 className="info-title">Histórico de jogadas</h3>
                 <ol>{moves}</ol>
             </div>
-            {boardLocked && !gameOver && (
-                <button onClick={nextRound} style={{marginTop: 16}}>Próxima rodada</button>
-            )}
-            {gameOver && (
-                <div style={{marginTop: 16}}>
-                    <h2>Fim da série! Vencedor: {seriesWinner}</h2>
-                    <button onClick={resetSeries}>Reiniciar série</button>
-                </div>
-            )}
+            <div className="game-actions">
+                {boardLocked && !gameOver && (
+                    <button onClick={nextRound} className="btn btn-primary btn-lg">Próxima rodada</button>
+                )}
+                {gameOver && (
+                    <div className="end-series-ui">
+                        <h2 className="end-series-title">Fim da série! Vencedor: <span className="end-series-winner">{seriesWinner}</span></h2>
+                        <button onClick={resetSeries} className="btn btn-reset btn-lg">Reiniciar série</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

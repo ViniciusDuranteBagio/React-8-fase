@@ -1,3 +1,116 @@
+/* --- Game UI Custom --- */
+.game-ui {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(102,126,234,0.10);
+  padding: 32px;
+  margin: 32px auto;
+  max-width: 700px;
+  flex-direction: column;
+  align-items: center;
+}
+.game-header {
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.scoreboard-ui {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #667eea;
+  background: #f0f4ff;
+  border-radius: 12px;
+  padding: 10px 24px;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+}
+.score-x, .score-o { color: #333; }
+.score-round { color: #764ba2; }
+.timer-ui {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 600;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 18px;
+  border: 1.5px solid #e0e7ff;
+  min-width: 120px;
+  transition: color 0.2s;
+}
+.timer-danger { color: #ff6b6b !important; }
+.game-controls {
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.bot-toggle-label {
+  font-weight: 500;
+  font-size: 1.08rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bot-toggle-input {
+  accent-color: #667eea;
+  width: 18px;
+  height: 18px;
+}
+.bot-info {
+  color: #888;
+  font-size: 0.98rem;
+}
+.board-ui {
+  margin: 0 auto 18px auto;
+}
+.bot-thinking {
+  margin-top: 8px;
+  color: #888;
+  font-style: italic;
+}
+.info-ui {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.06);
+  margin: 0 auto;
+  min-width: 180px;
+}
+.info-title {
+  color: #667eea;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.game-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-lg {
+  min-width: 160px;
+  font-size: 1.08rem;
+  padding: 14px 28px;
+}
+.end-series-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.end-series-title {
+  color: #764ba2;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.end-series-winner {
+  color: #667eea;
+}
 /* Reset e configurações básicas */
 * {
   box-sizing: border-box;
