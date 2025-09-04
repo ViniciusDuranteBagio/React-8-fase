@@ -26,9 +26,9 @@ function Board({ xIsNext, squares, onPlay }) {
     const winner = calculateWinner(squares);
     let status;
     if (winner) {
-        status = 'Winner: ' + winner;
+        status = 'Vencedor: ' + winner;
     } else {
-        status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+        status = 'Próximo: ' + (xIsNext ? 'X' : 'O');
     }
 
     return (
@@ -53,6 +53,8 @@ function Board({ xIsNext, squares, onPlay }) {
     );
 }
 
+let timerId = null;
+
 function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
     const [currentMove, setCurrentMove] = useState(0);
@@ -61,18 +63,30 @@ function Game() {
     const [parts, setParts] = useState([]);
     const currentSquares = history[currentMove];
 
+    const [timeLeft, setTimeLeft] = useState(10);
+    const [timerActive, setTimerActive] = useState(false);
+
     const [roundWins, setRoundWins] = useState({ player1: 0, player2: 0 });
+    const [showNextRound, setShowNextRound] = useState(false);
 
     function handlePlay(nextSquares) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
 
+        if (selectedMode === "botEasy" && timerActive) {
+            setTimeLeft(10);
+        }
+
         const winner = calculateWinner(nextSquares);
         if (winner) {
             const player = winner === 'X' ? 'Jogador 1' : 'Jogador 2';
             const updatedParts = [...parts, player];
             setParts(updatedParts);
+            setShowNextRound(true);
+            setTimerActive(false);
+            stopTimer();
+            setTimeLeft(10);
 
             if (selectedMode === 'bestOf3') {
                 const countPlayer1 = updatedParts.filter(p => p === 'Jogador 1').length;
@@ -119,9 +133,72 @@ function Game() {
                     const botHistory = [...nextHistory, botSquares];
                     setHistory(botHistory);
                     setCurrentMove(botHistory.length - 1);
-                }, 500);
+                    setTimeLeft(10);
+                }, 1000);
             }
         }
+    }
+
+    function startTimer() {
+        if (timerId) return;
+        setTimerActive(true);
+
+        if (timeLeft === 0) {
+            setTimeLeft(10);
+        }
+
+        timerId = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev === 0) {
+                    autoPlay();
+                    return 10;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    }
+
+    function stopTimer() {
+        setTimerActive(false);
+        if (timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        }
+    }
+
+    function autoPlay() {
+        setHistory(prevHistory => {
+            const currentSquares = prevHistory[prevHistory.length - 1].slice();
+
+            if (calculateWinner(currentSquares)) return prevHistory;
+
+            const movesPlayed = currentSquares.filter(sq => sq !== null).length;
+            const player = movesPlayed % 2 === 0 ? 'X' : 'O';
+
+            const emptyIndices = currentSquares
+                .map((val, idx) => (val === null ? idx : null))
+                .filter(val => val !== null);
+
+            if (emptyIndices.length === 0) return prevHistory;
+
+            const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+
+            if (player === 'X') {
+                currentSquares[randomIndex] = 'X';
+                setCurrentMove(prevHistory.length);
+                setTimeLeft(10);
+                return [...prevHistory, currentSquares];
+            } else {
+                setTimeout(() => {
+                    const newSquares = currentSquares.slice();
+                    newSquares[randomIndex] = 'O';
+                    setHistory(prev => [...prev, newSquares]);
+                    setCurrentMove(prevHistory.length);
+                    setTimeLeft(10);
+                }, 1000);
+                return prevHistory;
+            }
+        });
     }
 
     function jumpTo(nextMove) {
@@ -132,11 +209,16 @@ function Game() {
         setHistory([Array(9).fill(null)]);
         setCurrentMove(0);
         setParts([]);
+        setShowNextRound(false);
+        setTimerActive(false);
+        stopTimer();
+        setTimeLeft(10);
     }
 
     function resetPart() {
         setHistory([Array(9).fill(null)]);
         setCurrentMove(0);
+        setShowNextRound(false);
     }
 
     function undoMove() {
@@ -174,8 +256,20 @@ function Game() {
                     <h3>
                         Controles
                     </h3>
-                    {selectedMode === 'bestOf3' && (
+                    {selectedMode === 'bestOf3' && showNextRound && (
                         <button className="btn btn-secondary" onClick={() => resetPart()}>Próxima Rodada</button>
+                    )}
+                    {selectedMode === 'botEasy' && (
+                        <button className="btn btn-secondary"
+                            onClick={() => {
+                                if (timerActive) {
+                                    stopTimer();
+                                } else {
+                                    startTimer();
+                                }
+                            }}
+                        > {timerActive ? "Parar Timer" : "Iniciar Timer"}
+                        </button>
                     )}
                     <button className="btn btn-secondary" onClick={() => undoMove()}>Voltar Jogada</button>
                     <button className="btn btn-secondary" onClick={() => resetGame()}>Reiniciar Jogo</button>
@@ -199,6 +293,16 @@ function Game() {
                         </div>
                     </div>
                 </>
+            )}
+            {selectedMode === 'botEasy' && (
+                <div className="hero-buttons">
+                    <div className="game-info">
+                        <h3>Tempo</h3>
+                        <p>
+                            {timerActive ? `Contando: ${timeLeft} segundos` : `Parado: ${timeLeft} segundos`}
+                        </p>
+                    </div>
+                </div>
             )}
             <div className="sidebar right">
                 <div className="game-info">
