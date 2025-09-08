@@ -1,4 +1,19 @@
-/* Variáveis CSS */
+@media (display-mode: standalone) {
+  body {
+    background: var(--surface);
+
+    overscroll-behavior: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  .header {
+    box-shadow: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+}
 :root {
   --primary: #3b82f6;
   --primary-dark: #2563eb;
@@ -23,7 +38,6 @@
   --space-xl: 2rem;
 }
 
-/* Reset e base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -38,7 +52,6 @@ body {
   font-size: 16px;
 }
 
-/* Header */
 .header {
   position: sticky;
   top: 0;
@@ -73,7 +86,6 @@ body {
   color: var(--primary-dark);
 }
 
-/* Navegação */
 .nav {
   display: flex;
   gap: var(--space-sm);
@@ -101,14 +113,12 @@ body {
   font-weight: 600;
 }
 
-/* Container */
 .container {
   width: min(100% - 2rem, 64rem);
   margin-inline: auto;
   padding: var(--space);
 }
 
-/* Seções */
 section {
   background: var(--surface);
   border-radius: var(--radius-lg);
@@ -130,7 +140,6 @@ section p {
   line-height: 1.7;
 }
 
-/* Controles */
 .controls {
   display: flex;
   gap: var(--space-sm);
@@ -155,7 +164,6 @@ section p {
   box-shadow: 0 0 0 3px var(--primary-light);
 }
 
-/* Botões */
 button {
   background: var(--primary);
   color: white;
@@ -189,7 +197,7 @@ button.danger:hover {
   background: #dc2626;
 }
 
-/* Lista de todos */
+
 .todos {
   display: grid;
   gap: var(--space-sm);
@@ -230,7 +238,7 @@ button.danger:hover {
   opacity: 0.7;
 }
 
-/* Estados vazios */
+
 .empty-state {
   text-align: center;
   padding: var(--space-xl);
@@ -242,7 +250,7 @@ button.danger:hover {
   margin: 0;
 }
 
-/* Responsividade */
+
 @media (max-width: 768px) {
   :root {
     --space: 0.75rem;
@@ -317,7 +325,7 @@ button.danger:hover {
   }
 }
 
-/* Animações */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -333,7 +341,7 @@ button.danger:hover {
   animation: fadeIn 0.3s ease;
 }
 
-/* Melhorias de acessibilidade */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -342,7 +350,7 @@ button.danger:hover {
   }
 }
 
-/* Modo escuro (opcional) */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0f172a;

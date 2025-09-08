@@ -15,7 +15,7 @@ function AppLayout() {
           <h1 style={{margin:0}}><Link to="/">To-Do PWA</Link></h1>
           <nav className="nav" style={{display:'flex', gap:'.5rem', flexWrap:'wrap'}}>
             <NavLink to="/" end>Home</NavLink>
-            <NavLink to="/todoss">Todos</NavLink>
+            <NavLink to="/todos">Todos</NavLink> 
             <NavLink to="/about">About</NavLink>
           </nav>
         </div>

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import '../App.css';
 
 function loadTodos() {
   try {
     const raw = localStorage.getItem("todos");
-    const arr = raw ? JSON.parse(raw) : [];
-    return arr.map(todo => ({
-      ...todo,
-      done: todo.done === true || todo.done === "true"
-    }));
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
@@ -19,27 +14,22 @@ export default function Todos() {
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    // Salva sempre que o estado muda
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    setTodos([...todos, newTodo]);
+    setTodos(prev => [...prev, newTodo]);
     setInput("");
   }
 
   function toggleTodo(id) {
-    setTodos(
-      todos.map(todo =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
-    );
+    setTodos(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t));
   }
 
   function removeTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(prev => prev.filter(todo => todo.id !== id));
   }
 
   return (
@@ -64,11 +54,7 @@ export default function Todos() {
         )}
         {todos.map(t => (
           <div key={t.id} className="todo">
-            <input
-              type="checkbox"
-              checked={t.done}
-              onChange={() => toggleTodo(t.id)}
-            />
+            <input type="checkbox" checked={t.done} onChange={() => toggleTodo(t.id)} />
             <span className={t.done ? "completed" : ""}>{t.text}</span>
             <button className="danger" onClick={() => removeTodo(t.id)}>Remover</button>
           </div>
