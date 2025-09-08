@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha PWA</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#317EFB" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <h1 class="centralizado">BUGA BUGA 🚀</h1>
+  <p class="centralizado">QUERENDO DORMIR</p>
+  <img src="https://possidente.org/wp-content/uploads/2020/06/47b50-sono2bdo2badolescente.jpg" class="ImagemSono">
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('Service Worker registrado!'))
+        .catch(err => console.error('Falha no registro do SW:', err));
+    }
+  </script>
+</body>
+</html>
