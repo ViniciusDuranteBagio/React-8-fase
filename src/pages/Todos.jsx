@@ -23,9 +23,13 @@ export default function Todos() {
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    const newTodos = todos.map((todo) =>{
+      if(todo.id === id){
+        todo.done = !todo.done;
+      }
+      return todo;
+    })
+    setTodos(newTodos);
   }
 
   function removeTodo(id) {
