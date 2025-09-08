@@ -70,12 +70,12 @@ cd todo-react
 npm install
 
 # Execute o projeto
-npm start
+npm run dev
 ```
 
 ### Scripts Disponíveis
 ```bash
-npm start      # Executa o projeto em modo desenvolvimento
+npm run dev      # Executa o projeto em modo desenvolvimento
 npm run build  # Cria build de produção
 npm test       # Executa os testes
 ```
