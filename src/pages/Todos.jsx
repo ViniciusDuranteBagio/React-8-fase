@@ -25,11 +25,14 @@ export default function Todos() {
     setInput("");
   }
 
-  function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
-  }
+  toggleTask = (id) => {
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.map((t) =>
+        t.id === id ? { ...t, done: !t.done } : t
+      ),
+    }));
+  };
+  
 
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
