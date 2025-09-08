@@ -1,1 +1,16 @@
-{}
+{
+  "name": "To-Do PWA",
+  "short_name": "To-Do",
+  "description": "Um aplicativo de lista de tarefas simples e instalável.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
