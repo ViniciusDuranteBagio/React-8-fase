@@ -1,3 +1,4 @@
+
 export default function Home() {
   return (
     <div>
@@ -29,7 +30,7 @@ export default function Home() {
         <h2>🐛 Bugs para Identificar e Corrigir</h2>
         <div style={{display: 'grid', gap: '1rem', marginTop: '1rem'}}>
           <div style={{background: '#fef2f2', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #fecaca'}}>
-            <h4 style={{color: '#dc2626', marginBottom: '0.5rem'}}>🔴 Bug 1: Mutação Direta de Estado</h4>
+            <h4 style={{color: '#dc2626', marginBottom: '0.5rem'}}>🔴 Bug 1: Mutação Direta de Estado - FEITO</h4>
             <p style={{margin: '0 0 0.5rem 0', fontSize: '0.9rem'}}>O estado está sendo mutado diretamente em vez de criar novos objetos/arrays.</p>
             <div style={{background: '#fef7f7', padding: '0.75rem', borderRadius: '0.25rem', fontSize: '0.85rem', color: '#1f2937'}}>
               <strong>Como reproduzir:</strong> Vá em Todos → Adicione uma tarefa → Marque como concluída → 
@@ -38,7 +39,7 @@ export default function Home() {
           </div>
           
           <div style={{background: '#fef2f2', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #fecaca'}}>
-            <h4 style={{color: '#dc2626', marginBottom: '0.5rem'}}>🔴 Bug 2: Inconsistência no localStorage</h4>
+            <h4 style={{color: '#dc2626', marginBottom: '0.5rem'}}>🔴 Bug 2: Inconsistência no localStorage - FEITO</h4>
             <div style={{background: '#fef7f7', padding: '0.75rem', borderRadius: '0.25rem', fontSize: '0.85rem', color: '#1f2937'}}>
               <strong>Como reproduzir:</strong> Vá em Todos → Adicione algumas tarefas → Recarregue a página (F5) → 
               Observe que as tarefas desapareceram mesmo tendo sido "salvas".
@@ -102,7 +103,7 @@ export default function Home() {
           5. Teste a instalação e funcionamento offline
         </p>
         <div style={{marginTop: '1.5rem', textAlign: 'center'}}>
-          <a href="/todoss" style={{
+          <a href="/todos" style={{
             display: 'inline-block',
             background: 'var(--primary)',
             color: 'white',
