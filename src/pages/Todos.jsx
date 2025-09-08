@@ -11,7 +11,7 @@ function loadTodos() {
 
 export default function Todos() {
   const [input, setInput] = useState('');
-  const [todos, setTodos] = useState(loadTodos);
+  const [todos, setTodos] = useState(() => loadTodos());
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
