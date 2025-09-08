@@ -2,6 +2,7 @@ const CACHE = "todo-pwa-v4";
 const ASSETS = [
   "/",
   "/index.html",
+  "/styles.css",
   "/manifest.webmanifest",
   "/sw.js"
 ];
