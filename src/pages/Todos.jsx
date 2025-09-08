@@ -13,15 +13,12 @@ export default function Todos() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(loadTodos);
 
-  useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
-  }, [todos]);
-
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
     todos.push(newTodo);
     setTodos(todos);
+    localStorage.setItem("todos", JSON.stringify(todos));
     setInput("");
   }
 
