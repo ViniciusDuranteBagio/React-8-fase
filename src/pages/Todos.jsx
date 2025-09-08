@@ -26,13 +26,14 @@ export default function Todos() {
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    const newTodos = todos.map((t) =>
+      t.id === id ? { ...t, done: !t.done } : t
+    );
+    setTodos(newTodos);
   }
 
   function removeTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   }
 
   return (
@@ -43,8 +44,8 @@ export default function Todos() {
           type="text"
           placeholder="Digite uma nova tarefa..."
           value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyPress={e => e.key === 'Enter' && addTodo()}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && addTodo()}
         />
         <button onClick={addTodo}>Adicionar</button>
       </div>
@@ -55,11 +56,17 @@ export default function Todos() {
             <p>🎯 Nenhuma tarefa ainda. Que tal adicionar uma?</p>
           </div>
         )}
-        {todos.map(t => (
+        {todos.map((t) => (
           <div key={t.id} className="todo">
-            <input type="checkbox" checked={t.done} onChange={() => toggleTodo(t.id)} />
+            <input
+              type="checkbox"
+              checked={t.done}
+              onChange={() => toggleTodo(t.id)}
+            />
             <span className={t.done ? "completed" : ""}>{t.text}</span>
-            <button className="danger" onClick={() => removeTodo(t.id)}>Remover</button>
+            <button className="danger" onClick={() => removeTodo(t.id)}>
+              Remover
+            </button>
           </div>
         ))}
       </div>
