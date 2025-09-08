@@ -1,1 +1,16 @@
-{}
+{
+  "name": "Meu App",
+  "short_name": "App",
+  "id": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}
