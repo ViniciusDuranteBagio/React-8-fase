@@ -14,13 +14,13 @@ export default function Todos() {
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    setTodos([...todos, newTodo]); // cria novo array
+    setTodos([...todos, newTodo]);
     setInput("");
   }
 
@@ -29,12 +29,14 @@ export default function Todos() {
       todos.map(todo =>
         todo.id === id ? { ...todo, done: !todo.done } : todo
       )
-    ); // cria novo array
+    ); 
   }
 
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
   }
+
+  console.log(todos);
 
   return (
     <section>
