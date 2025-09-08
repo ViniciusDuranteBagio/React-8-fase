@@ -14,7 +14,7 @@ export default function Todos() {
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   function addTodo() {
@@ -26,10 +26,14 @@ export default function Todos() {
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
-  }
+  setTodos(todos.map(todo => {
+    if (todo.id === id) {
+      return { ...todo, done: !todo.done };
+    } else {
+      return todo;
+    }
+  }));
+}
 
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));

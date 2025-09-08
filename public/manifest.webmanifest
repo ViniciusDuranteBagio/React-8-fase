@@ -1,1 +1,21 @@
-{}
+{
+  "name": "Prova 1",
+  "short_name": "prova",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "description": "Prova 1 dispositivos móveis.",
+  "icons": [
+    {
+      "src": "/public/react.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/public/react.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
