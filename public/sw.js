@@ -44,11 +44,12 @@ self.addEventListener("fetch", (event) => {
   if (request.mode === "navigate") {
     event.respondWith(
       caches.match("/index.html").then(cached => {
-        if (cached) {
-          return cached;
-        }
-        // Se não estiver em cache, tenta buscar da rede
+        // Tenta buscar da rede
         return fetch(request).catch(() => {
+          // Se falhar, tenta retornar do cache
+          if (cached) {
+            return cached;
+          }
           // Se falhar, retorna uma página offline básica
           return new Response(`
             <!DOCTYPE html>
