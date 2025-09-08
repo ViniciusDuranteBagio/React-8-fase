@@ -7,7 +7,7 @@ import Todos from "./pages/Todos.jsx";
 import About from "./pages/About.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
-export function AppLayout() {
+function AppLayout() {
   return (
     <div>
       <header className="header">
