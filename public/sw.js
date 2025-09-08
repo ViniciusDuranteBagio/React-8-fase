@@ -1,6 +1,7 @@
 const CACHE = "todo-pwa-v4";
 const ASSETS = [
   "/",
+  "/styles.css",
   "/index.html",
   "/manifest.webmanifest",
   "/sw.js"
@@ -34,7 +35,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-  
+
   // Ignora requisições que não são GET
   if (request.method !== "GET") {
     return;
@@ -82,7 +83,7 @@ self.addEventListener("fetch", (event) => {
       if (cached) {
         return cached;
       }
-      
+
       // Se não estiver em cache, tenta buscar da rede
       return fetch(request).then(response => {
         // Se a resposta for válida, adiciona ao cache
@@ -104,7 +105,7 @@ self.addEventListener("fetch", (event) => {
             headers: { "Content-Type": "text/css" }
           });
         }
-        
+
         // Para outros recursos, retorna erro
         return new Response("Recurso não disponível offline", {
           status: 404,
