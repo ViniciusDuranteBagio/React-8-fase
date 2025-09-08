@@ -11,16 +11,33 @@ function AppLayout() {
   return (
     <div>
       <header className="header">
-        <div className="container" style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'.75rem'}}>
-          <h1 style={{margin:0}}><Link to="/">To-Do PWA</Link></h1>
-          <nav className="nav" style={{display:'flex', gap:'.5rem', flexWrap:'wrap'}}>
-            <NavLink to="/" end>Home</NavLink>
-            <NavLink to="/todoss">Todos</NavLink>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: ".75rem",
+          }}
+        >
+          <h1 style={{ margin: 0 }}>
+            <Link to="/">To-Do PWA</Link>
+          </h1>
+          <nav
+            className="nav"
+            style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}
+          >
+            <NavLink to="/" end>
+              Home
+            </NavLink>
+            <NavLink to="/todos">Todos</NavLink>
             <NavLink to="/about">About</NavLink>
           </nav>
         </div>
       </header>
-      <main className="container"><Outlet /></main>
+      <main className="container">
+        <Outlet />
+      </main>
     </div>
   );
 }
@@ -48,5 +65,7 @@ if ("serviceWorker" in navigator) {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode><RouterProvider router={router} /></React.StrictMode>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
