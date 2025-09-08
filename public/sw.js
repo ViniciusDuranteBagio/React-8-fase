@@ -6,7 +6,6 @@ const ASSETS = [
   "/manifest.webmanifest",
   "/sw.js",
   "/icon-144.png",
-  "/icon-180.png",
   "/icon-192.png",
   "/icon-512.png",
 ];
