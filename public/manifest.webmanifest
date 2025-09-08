@@ -1,1 +1,21 @@
-{}
+{
+  "name": "To-Do PWA",
+  "short_name": "ToDo",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "description": "Primeira prova",
+  "icons": [
+    {
+      "src": "/icons/icon-192-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
