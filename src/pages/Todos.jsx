@@ -10,16 +10,12 @@ function loadTodos() {
 }
 
 export default function Todos() {
-  const [input, setInput] = useState(loadTodos);
+  const [input, setInput] = useState('');
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    try {
-      localStorage.setItem('todos', JSON.stringify(todos)); //bug 2 corrigido
-    } catch (e) {
-      console.error('Falha ao salvar todos no localStorage', e);
-    }
-  }, [todos]);
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]); //bug 2 corrigido
 
   function addTodo() {
     if (!input.trim()) return;
