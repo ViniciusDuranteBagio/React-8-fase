@@ -3,7 +3,9 @@ const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
-  "/sw.js"
+  "/sw.js",
+  "/styles.css",
+  "/vite.svg"
 ];
 
 self.addEventListener("install", (event) => {
