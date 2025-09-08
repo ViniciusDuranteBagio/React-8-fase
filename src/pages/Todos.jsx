@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function loadTodos() {
   try {
-    const raw = localStorage.getItem("todos");
+    const raw = localStorage.getItem("todo");
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -26,9 +26,11 @@ export default function Todos() {
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(todos =>
+      todos.map(todo => 
+        todo.id === id ? { ...todo, done: !todo.done}:todo
+      )
+    )
   }
 
   function removeTodo(id) {
@@ -48,7 +50,6 @@ export default function Todos() {
         />
         <button onClick={addTodo}>Adicionar</button>
       </div>
-
       <div className="todos">
         {todos.length === 0 && (
           <div className="empty-state">

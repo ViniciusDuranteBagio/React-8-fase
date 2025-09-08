@@ -102,7 +102,7 @@ export default function Home() {
           5. Teste a instalação e funcionamento offline
         </p>
         <div style={{marginTop: '1.5rem', textAlign: 'center'}}>
-          <a href="/todoss" style={{
+          <a href="/todos" style={{
             display: 'inline-block',
             background: 'var(--primary)',
             color: 'white',
@@ -114,7 +114,7 @@ export default function Home() {
             transition: 'all 0.2s ease'
           }}>
             🎯 Começar a Prova - Ir para Todos
-          </a>
+          </a> 
         </div>
       </section>
     </div>
