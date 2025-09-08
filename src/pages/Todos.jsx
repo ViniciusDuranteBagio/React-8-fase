@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 function loadTodos() {
   try {
-    const raw = localStorage.getItem("todos");
+    const raw = localStorage.getItem('todos');
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -10,29 +10,32 @@ function loadTodos() {
 }
 
 export default function Todos() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(loadTodos);
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
+    try {
+      localStorage.setItem('todo', JSON.stringify(todos));
+    } catch (e) {
+      console.error('Falha ao salvar todos no localStorage', e);
+    }
   }, [todos]);
 
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    todos.push(newTodo);
-    setTodos(todos);
-    setInput("");
+    setTodos((prev) => [...prev, newTodo]); //bug 1 corrigido
+    setInput('');
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(
+      (prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)) //bug 1 corrigido
+    );
   }
 
   function removeTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
   return (
@@ -43,8 +46,8 @@ export default function Todos() {
           type="text"
           placeholder="Digite uma nova tarefa..."
           value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyPress={e => e.key === 'Enter' && addTodo()}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
         />
         <button onClick={addTodo}>Adicionar</button>
       </div>
@@ -55,11 +58,17 @@ export default function Todos() {
             <p>🎯 Nenhuma tarefa ainda. Que tal adicionar uma?</p>
           </div>
         )}
-        {todos.map(t => (
+        {todos.map((t) => (
           <div key={t.id} className="todo">
-            <input type="checkbox" checked={t.done} onChange={() => toggleTodo(t.id)} />
-            <span className={t.done ? "completed" : ""}>{t.text}</span>
-            <button className="danger" onClick={() => removeTodo(t.id)}>Remover</button>
+            <input
+              type="checkbox"
+              checked={t.done}
+              onChange={() => toggleTodo(t.id)}
+            />
+            <span className={t.done ? 'completed' : ''}>{t.text}</span>
+            <button className="danger" onClick={() => removeTodo(t.id)}>
+              Remover
+            </button>
           </div>
         ))}
       </div>
