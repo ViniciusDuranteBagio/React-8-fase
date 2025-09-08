@@ -3,7 +3,8 @@ const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
-  "/sw.js"
+  "/sw.js",
+  "/styles.css",
 ];
 
 self.addEventListener("install", (event) => {
@@ -26,7 +27,6 @@ self.addEventListener("activate", (event) => {
         })
       );
     }).then(() => {
-      // Assume controle de todos os clientes
       return self.clients.claim();
     })
   );

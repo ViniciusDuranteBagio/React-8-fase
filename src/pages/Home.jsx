@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
   return (
     <div>
@@ -102,19 +104,22 @@ export default function Home() {
           5. Teste a instalação e funcionamento offline
         </p>
         <div style={{marginTop: '1.5rem', textAlign: 'center'}}>
-          <a href="/todoss" style={{
-            display: 'inline-block',
-            background: 'var(--primary)',
-            color: 'white',
-            padding: '1rem 2rem',
-            borderRadius: 'var(--radius)',
-            textDecoration: 'none',
-            fontWeight: '600',
-            fontSize: '1.1rem',
-            transition: 'all 0.2s ease'
-          }}>
+          <Link
+            to="/todos"
+            style={{
+              display: 'inline-block',
+              background: 'var(--primary)',
+              color: 'white',
+              padding: '1rem 2rem',
+              borderRadius: 'var(--radius)',
+              textDecoration: 'none',
+              fontWeight: '600',
+              fontSize: '1.1rem',
+              transition: 'all 0.2s ease'
+            }}
+          >
             🎯 Começar a Prova - Ir para Todos
-          </a>
+          </Link>
         </div>
       </section>
     </div>
