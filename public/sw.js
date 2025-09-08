@@ -3,6 +3,7 @@ const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
+  "/styles.css", //adicionei isso, mas o bug 4 não aconteceu comigo
   "/sw.js"
 ];
 
