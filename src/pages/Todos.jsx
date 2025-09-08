@@ -30,10 +30,13 @@ export default function Todos() {
       return todo;
     })
     setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   }
 
   function removeTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    const newTodos = todos.filter(todo => todo.id !== id);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   }
 
   return (
