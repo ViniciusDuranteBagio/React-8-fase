@@ -15,7 +15,7 @@ export default function Todos() {
 
   useEffect(() => {
     try {
-      localStorage.setItem('todo', JSON.stringify(todos));
+      localStorage.setItem('todos', JSON.stringify(todos)); //bug 2 corrigido
     } catch (e) {
       console.error('Falha ao salvar todos no localStorage', e);
     }
