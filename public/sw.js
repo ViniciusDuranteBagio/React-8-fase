@@ -3,6 +3,7 @@ const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
+  "/styles.css",
   "/sw.js"
 ];
 
@@ -34,9 +35,14 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-  
+
   // Ignora requisições que não são GET
   if (request.method !== "GET") {
+    return;
+  }
+
+  // Ignora requisições de extensões do Chrome
+  if (request.url.startsWith("chrome-extension://")) {
     return;
   }
 
@@ -82,15 +88,18 @@ self.addEventListener("fetch", (event) => {
       if (cached) {
         return cached;
       }
-      
+
       // Se não estiver em cache, tenta buscar da rede
       return fetch(request).then(response => {
         // Se a resposta for válida, adiciona ao cache
         if (response.status === 200) {
           const responseClone = response.clone();
-          caches.open(CACHE).then(cache => {
-            cache.put(request, responseClone);
-          });
+          // Ignora requisições de extensões do Chrome ao salvar no cache
+          if (!request.url.startsWith("chrome-extension://")) {
+            caches.open(CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
         }
         return response;
       }).catch(() => {
@@ -104,7 +113,7 @@ self.addEventListener("fetch", (event) => {
             headers: { "Content-Type": "text/css" }
           });
         }
-        
+
         // Para outros recursos, retorna erro
         return new Response("Recurso não disponível offline", {
           status: 404,
