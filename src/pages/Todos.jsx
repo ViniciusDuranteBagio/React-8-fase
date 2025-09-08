@@ -26,10 +26,18 @@ export default function Todos() {
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(
+      todos.map(
+        (todo) =>
+          todo.id === id
+            ? { ...todo, done: !todo.done } // Se for o ID, troca o done
+            : todo // Se não, copia o mesmo objeto
+      )
+    );
   }
+  // Está tudo dentro do setTodos por ser mais fácil. O Array poderia ser
+  // uma variável sozinha, mas é mais pratico já fazer dentro do setTodos()
+
 
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
