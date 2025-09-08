@@ -1,1 +1,17 @@
-{}
+{
+    "name": "PWA Prova 1",
+    "short_name": "PWA",
+    "description": "Um To-Do PWA para gerenciar tarefas, salvar no localStorage e funcionar offline.",
+    "id": "/",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3b82f6",
+    "icons": [
+        {
+            "src": "/icon-144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
+    ]
+}

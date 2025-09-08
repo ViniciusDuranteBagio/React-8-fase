@@ -22,7 +22,7 @@ export default function Todos() {
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
     todos.push(newTodo);
     setTodos([...todos]);
-    //setInput(""); tirei para facilitar a insersão de testes
+    setInput("");
   }
 
   function toggleTodo(id) {
