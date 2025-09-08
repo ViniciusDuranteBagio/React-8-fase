@@ -20,19 +20,21 @@ export default function Todos() {
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    todos.push(newTodo);
-    setTodos(todos);
+    setTodos((prev) => [...prev, newTodo]);
     setInput("");
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(prev =>
+      prev.map(todo => {
+        if (todo.id !== id) return todo;
+        return { ...todo, done: !todo.done };
+      })
+    );
   }
 
   function removeTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
   return (
