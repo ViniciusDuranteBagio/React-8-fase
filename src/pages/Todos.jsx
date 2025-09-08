@@ -14,7 +14,7 @@ export default function Todos() {
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   function addTodo() {
