@@ -20,15 +20,16 @@ export default function Todos() {
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    todos.push(newTodo);
-    setTodos(todos);
+    setTodos([...todos, newTodo]); // cria novo array
     setInput("");
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(
+      todos.map(todo =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    ); // cria novo array
   }
 
   function removeTodo(id) {
