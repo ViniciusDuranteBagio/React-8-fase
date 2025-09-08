@@ -1,35 +1,37 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Game from './pages/Game.jsx';  
-import Navigation from './components/Navigation.jsx';
-import Home from './pages/Home.jsx';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Game from './pages/Game';
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
 
-const router = createBrowserRouter ([
+const router = createBrowserRouter([
   {
-    path: '/',
-    element: (<Applayout>
-      <Home />
-    </Applayout>)
+    path : '/', 
+    element: (
+      <AppLayout>
+       <Home/>
+      </AppLayout>
+    )
   },
-    {
-    path: '/game',
-    element: (<Applayout>
-      <Game />
-    </Applayout>)
-  }
-])
 
-function Applayout ({ children }) {
-  return (
-    <div className="app">
-      <Navigation />
-    <main className="main-content">
-      {children}
+  {
+    path : '/game', 
+    element: (
+      <AppLayout>
+         <Game/>
+      </AppLayout>
+    )
+  }
+]);
+
+function AppLayout({children}) {
+  return (<div className="app">
+    <Navigation/>
+    <main className="main-content"> 
+     {children}
     </main>
-    </div>
-  );
+    </div>);
 }
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router}/>
 }
-
