@@ -1,1 +1,21 @@
-{}
+{
+    "short_name": "Todos",
+    "name": "Meu App de Tarefas",
+    "icons": [
+      {
+        "src": "icone.jpg",
+        "sizes": "192x192",
+        "type": "image/jpeg"
+      },
+      {
+        "src": "icone.jpg",
+        "sizes": "512x512",
+        "type": "image/jpeg"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3174ad"
+  }
+  
