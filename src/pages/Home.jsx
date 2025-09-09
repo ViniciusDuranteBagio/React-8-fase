@@ -54,7 +54,13 @@ export default function Home() {
               border: "1px solid #fecaca",
             }}
           >
-            <h4 style={{ color: "#dc2626", marginBottom: "0.5rem", textDecoration: "line-through"}}>
+            <h4
+              style={{
+                color: "#dc2626",
+                marginBottom: "0.5rem",
+                textDecoration: "line-through",
+              }}
+            >
               🔴 Bug 1: Mutação Direta de Estado
             </h4>
             <p style={{ margin: "0 0 0.5rem 0", fontSize: "0.9rem" }}>
@@ -84,7 +90,13 @@ export default function Home() {
               border: "1px solid #fecaca",
             }}
           >
-            <h4 style={{ color: "#dc2626", marginBottom: "0.5rem" }}>
+            <h4
+              style={{
+                color: "#dc2626",
+                marginBottom: "0.5rem",
+                textDecoration: "line-through",
+              }}
+            >
               🔴 Bug 2: Inconsistência no localStorage
             </h4>
             <div
@@ -110,7 +122,13 @@ export default function Home() {
               border: "1px solid #fecaca",
             }}
           >
-            <h4 style={{ color: "#dc2626", marginBottom: "0.5rem" }}>
+            <h4
+              style={{
+                color: "#dc2626",
+                marginBottom: "0.5rem",
+                textDecoration: "line-through",
+              }}
+            >
               🔴 Bug 3: Não está sendo possivel instalar o app
             </h4>
             <div
