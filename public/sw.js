@@ -1,5 +1,11 @@
 const CACHE = "todo-pwa-v4";
-const ASSETS = ["/", "/index.html", "/manifest.webmanifest", "/sw.js"];
+const ASSETS = [
+  "/",
+  "/index.html",
+  "/manifest.webmanifest",
+  "/sw.js",
+  "/styles.css",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
