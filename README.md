@@ -82,3 +82,49 @@ aulas/
       - Se ativar o **modo Bot**: ele deve jogar em posição aleatória, após um pequeno delay.  
       - Se ativar o **timer**: turno dura no máximo 10s, caso expire deve pular jogada ou jogar automático.  
   </details>
+- [**Prova 1**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/prova-1-gabriel-ramos) *(prova de conteúdo das aulas anteriores)*  
+  <details>
+    <summary>instruções</summary>
+    
+    - Data: 08/09/2025  
+    - Formato: Presencial, individual.  
+    - Conteúdo: tudo que foi abordado das aulas 1 à 5.  
+    - Entrega: Fazer commits da resolução dos bugs no repositório até o final da aula.  
+  </details>
+
+- [**7a-aula-react-native-expo**](#) *(primeiro contato com desenvolvimento mobile)*  
+  <details>
+    <summary>preparação de ambiente</summary>
+    
+    1. Instalar [Node.js LTS](https://nodejs.org/)  
+    2. Instalar Expo CLI globalmente:  
+       ```bash
+       npm install --global expo-cli
+       ```
+    3. Instalar o app **Expo Go** no celular:  
+       - [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)  
+       - [App Store](https://apps.apple.com/app/expo-go/id982107779)  
+    4. Criar projeto:  
+       ```bash
+       npx create-expo-app meu-primeiro-app
+       cd meu-primeiro-app
+       npx expo start
+       ```
+    5. Escanear o QR Code no navegador pelo app **Expo Go**.  
+
+    Documentação:  
+    - [React Native Docs](https://reactnative.dev/docs/getting-started)  
+    - [Expo Docs](https://docs.expo.dev/)  
+  </details>
+
+  <details>
+    <summary>atividades</summary>
+    
+    - Fazer o projeto inicial rodar no Expo Go.  
+    - Analisar o código gerado e responder as perguntas:  
+      1. Liste **3 aplicativos** que você mais usa no dia a dia.  
+      2. Qual a funcionalidade mais interessante/importante que você já viu em um app?  
+      3. Escolha um deles e diga **qual você gostaria de ter criado e por quê**.  
+
+    - Entregar as respostas no **AVA** (formato TXT ou DOCX).  
+  </details>
