@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "meu-primeiro-app",
+    "slug": "meu-primeiro-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./icon.png",
+    "splash": {
+      "image": "./splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2563eb"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./icon.png",
+        "backgroundColor": "#2563eb"
+      }
+    },
+    "web": {
+      "favicon": "./icon.png"
+    }
+  }
+}
+
+
