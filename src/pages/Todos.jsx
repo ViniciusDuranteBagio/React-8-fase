@@ -8,27 +8,27 @@ function loadTodos() {
     return [];
   }
 }
-
 export default function Todos() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState(loadTodos);
 
   useEffect(() => {
-    localStorage.setItem("todo", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   function addTodo() {
     if (!input.trim()) return;
     const newTodo = { id: Date.now(), text: input.trim(), done: false };
-    todos.push(newTodo);
-    setTodos(todos);
+    setTodos([...todos, newTodo]);
     setInput("");
   }
 
   function toggleTodo(id) {
-    const t = todos.find(x => x.id === id);
-    if (t) t.done = !t.done;
-    setTodos(todos);
+    setTodos(
+      todos.map(todo =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    );
   }
 
   function removeTodo(id) {
