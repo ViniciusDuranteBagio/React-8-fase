@@ -92,7 +92,7 @@ aulas/
     - Entrega: Fazer commits da resolução dos bugs no repositório até o final da aula.  
   </details>
 
-- [**7a-aula-react-native-expo**](#) *(primeiro contato com desenvolvimento mobile)*  
+- [**7a-aula-react-native-expo**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/7a-aula) *(primeiro contato com desenvolvimento mobile)*  
   <details>
     <summary>preparação de ambiente</summary>
     
@@ -128,3 +128,5 @@ aulas/
 
     - Entregar as respostas no **AVA** (formato TXT ou DOCX).  
   </details>
+
+- [**8a-aula**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/8a-aula) *(em breve)*  
