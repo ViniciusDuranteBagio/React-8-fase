@@ -2,6 +2,7 @@ import InfoCard from "@/components/info-card";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Animated,
@@ -21,6 +22,7 @@ export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setModalData] = useState<ModalData | null>(null);
   const fadeAnim = new Animated.Value(0);
+  const router = useRouter();
 
   const openModal = (data: ModalData) => {
     setModalData(data);
@@ -97,6 +99,13 @@ export default function HomeScreen() {
               color: "#2ecc71",
             })
           }
+        />
+        <InfoCard
+          title="Sobre o App"
+          value=""
+          icon="information-circle-outline"
+          color="#9b59b6"
+          onPress={() => router.push("/about")}
         />
       </ScrollView>
 
