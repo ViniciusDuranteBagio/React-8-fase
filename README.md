@@ -129,4 +129,35 @@ aulas/
     - Entregar as respostas no **AVA** (formato TXT ou DOCX).  
   </details>
 
-- [**8a-aula**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/8a-aula) *(em breve)*  
+- **8a-aula**  
+  <details>
+    <summary>atividades</summary>
+    
+    - Foi realizado um **Karrot** com **10 perguntas** referentes ao conteúdo já estudado nas aulas anteriores.
+  </details>
+
+- [**9a-aula-react-native-expo**](https://github.com/ViniciusDuranteBagio/React-8-fase/tree/gabriel-ramos/9a-aula) *(manipulação de telas e componentes no Expo)*  
+  <details>
+    <summary>atividades</summary>
+    
+    **Exercício 1 – Criar uma nova aba "Perfil"**  
+    Objetivo: adicionar uma nova aba chamada **Perfil** ao sistema de navegação.  
+    - Criar arquivo `app/(tabs)/profile.tsx`  
+    - Copiar estrutura de algum arquivo já criado como base  
+    - Adicionar aba no `_layout.tsx`  
+    - Escolher ícone apropriado  
+
+    **Exercício 2 – Criar um componente de Card**  
+    Objetivo: criar um componente reutilizável de **Card** para exibir informações.  
+    - Criar arquivo `components/info-card.tsx`  
+    - Usar `ThemeView` e `ThemedText`  
+    - Adicionar props para **título** e **descrição**  
+    - Usar o componente na tela **Home**  
+
+    **Exercício 3 – Criar uma página "Sobre"**  
+    Objetivo: criar uma tela independente (não aba) chamada **Sobre**.  
+    - Criar arquivo `app/about.tsx`  
+    - Registrar no `_layout.tsx`  
+    - Adicionar botão na tela **Home** para acessar  
+    - Usar componentes temáticos  
+  </details>
