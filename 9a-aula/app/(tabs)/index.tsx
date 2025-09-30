@@ -1,52 +1,149 @@
-import { Image } from 'expo-image';
-import { StyleSheet } from 'react-native';
+import InfoCard from "@/components/info-card";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import {
+  Animated,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+interface ModalData {
+  title: string;
+  description: string;
+  color: string;
+}
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Bem-vindo!</ThemedText>
-        <HelloWave />
-      </ThemedView>
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalData, setModalData] = useState<ModalData | null>(null);
+  const fadeAnim = new Animated.Value(0);
 
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Mestre dos Códigos</ThemedText>
-        <ThemedText>
-          Que as linhas de código estejam sempre a seu favor! Você está pronto para
-          embarcar em uma jornada épica de desenvolvimento de software? Vamos lá!
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const openModal = (data: ModalData) => {
+    setModalData(data);
+    setModalVisible(true);
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeModal = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => setModalVisible(false));
+  };
+
+  return (
+    <ThemedView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <InfoCard
+          title="Missões Ativas"
+          value={5}
+          icon="rocket-outline"
+          color="#ff6f61"
+          onPress={() =>
+            openModal({
+              title: "Missões Ativas",
+              description: "Você possui 5 missões ativas! Complete-as para ganhar XP e recompensas.",
+              color: "#ff6f61",
+            })
+          }
+        />
+
+        <InfoCard
+          title="Recompensas"
+          value="4.200 XP"
+          icon="trophy-outline"
+          color="#f1c40f"
+          onPress={() =>
+            openModal({
+              title: "Recompensas",
+              description: "Você acumulou 4.200 XP até agora. Continue evoluindo!",
+              color: "#f1c40f",
+            })
+          }
+        />
+
+        <InfoCard
+          title="Notificações"
+          value="3 Novas"
+          icon="notifications-outline"
+          color="#3498db"
+          onPress={() =>
+            openModal({
+              title: "Notificações",
+              description: "Você possui 3 novas notificações importantes.",
+              color: "#3498db",
+            })
+          }
+        />
+
+        <InfoCard
+          title="Mensagens"
+          value={12}
+          icon="chatbubble-ellipses-outline"
+          color="#2ecc71"
+          onPress={() =>
+            openModal({
+              title: "Mensagens",
+              description: "Você tem 12 mensagens não lidas. Leia para se manter atualizado.",
+              color: "#2ecc71",
+            })
+          }
+        />
+      </ScrollView>
+
+      {/* Modal */}
+      <Modal transparent visible={modalVisible} animationType="none">
+        <Animated.View style={[styles.modalOverlay, { opacity: fadeAnim }]}>
+          <ThemedView style={styles.modalContent}>
+            <ThemedText type="title" style={{ color: modalData?.color, marginBottom: 12 }}>
+              {modalData?.title}
+            </ThemedText>
+            <ThemedText style={styles.modalText}>{modalData?.description}</ThemedText>
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <Ionicons name="close-circle-outline" size={32} color="#ff0000ff" />
+            </TouchableOpacity>
+          </ThemedView>
+        </Animated.View>
+      </Modal>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: { flex: 1 },
+  scrollContent: { padding: 20, paddingTop: 40 },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  modalContent: {
+    width: "85%",
+    borderRadius: 16,
+    padding: 24,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  modalText: {
+    fontSize: 16,
+    color: "#ddddddff",
+    lineHeight: 22,
+  },
+  closeButton: {
+    alignSelf: "center",
+    marginTop: 20,
   },
 });
