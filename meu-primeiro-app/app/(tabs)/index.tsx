@@ -6,6 +6,7 @@ import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Link } from 'expo-router';
+import { AboutButton } from '@/components/aboutButton';
 
 export default function HomeScreen() {
   return (
@@ -63,6 +64,14 @@ export default function HomeScreen() {
         <ThemedText>
           {`Tap the Explore tab to learn more about what's included in this starter app.`}
         </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Conheça o projeto</ThemedText>
+        <ThemedText>
+          Acesse a página Sobre para entender melhor os objetivos e próximos passos desta
+          aplicação.
+        </ThemedText>
+        <AboutButton />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
